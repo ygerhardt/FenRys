@@ -59,18 +59,19 @@ def compute_metrics(eval_pred):
 # 10. Trainingsargumente festlegen
 training_args = TrainingArguments(
     output_dir='./results',
-    eval_strategy='epoch',
+    eval_strategy='steps',  # Verwende 'steps' für die Evaluation
+    eval_steps=1000,  # Evaluation alle 1000 Schritte
     learning_rate=5e-5,
-    per_device_train_batch_size=2,
-    gradient_accumulation_steps=4,  # Beispiel für Gradient Accumulation
-    num_train_epochs=100,
-    weight_decay=0.01,
+    per_device_train_batch_size=4,
+    num_train_epochs=100,  # Reduziert auf 10 Epochen für den Testlauf
+    weight_decay=0.02,
     logging_dir='./logs',
     logging_steps=10,
-    evaluation_strategy="epoch",
-    save_strategy="epoch",
+    save_strategy="steps",  # Speichern alle 1000 Schritte
+    save_steps=1000,  # Speichern alle 1000 Schritte
     load_best_model_at_end=True,  # Lade das beste Modell am Ende
-    metric_for_best_model='eval_loss',  # Metrik für das beste Modell
+    metric_for_best_model="perplexity",  # Die Metrik für das beste Modell
+    greater_is_better=False,  # Bei Perplexity ist weniger besser
 )
 
 # 11. Trainer-Instanz erstellen
@@ -82,11 +83,8 @@ trainer = Trainer(
     compute_metrics=compute_metrics
 )
 
-# 12. Trainiere das Modell mit mixed precision
-scaler = GradScaler()  # Initialisiere den GradScaler für mixed precision
-
-with autocast():
-    trainer.train()
+# 12. Trainiere das Modell
+trainer.train()  # Trainiere für alle Epochen
 
 # 13. Modell speichern
 model.save_pretrained('./finetuned_gpt_neo')

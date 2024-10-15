@@ -8,3 +8,8 @@ Using the `Trainer` with `PyTorch` requires `accelerate>=0.26.0`: Please run `pi
     training_args = TrainingArguments(
                     ^^^^^^^^^^^^^^^^^^
 ImportError: Using the `Trainer` with `PyTorch` requires `accelerate>=0.26.0`: Please run `pip install transformers[torch]` or `pip install 'accelerate>={ACCELERATE_MIN_VERSION}'`
+Automatisches Scraping: Verwende Web-Scraping, um relevante Daten aus dem Internet zu sammeln.
+Feedback-Schleifen einrichten: Speichere die Benutzerantworten und lass das Modell mit diesen neuen Daten erneut trainieren.
+Aktives Lernen: Implementiere einen Prozess, bei dem das Modell Feedback über falsche Antworten erhält und diese in zukünftige Trainings einfließen.
+
+D
