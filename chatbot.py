@@ -118,7 +118,7 @@ def retrain_model(training_data_path='data/chat_data.json', min_feedback=10):
         per_device_train_batch_size=4,
         logging_dir='./logs',
         logging_steps=10,
-        save_strategy="epoch",
+        save_strategy="steps",
         load_best_model_at_end=True,
         evaluation_strategy='steps',
         eval_steps=500,
